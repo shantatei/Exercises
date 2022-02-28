@@ -1,1 +1,2 @@
-# wss-2023--training
+# WSS(2023)-Training
+Files to keep all WSS training materials
