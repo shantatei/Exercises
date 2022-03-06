@@ -1,0 +1,22 @@
+{
+  "name": "Exercises",
+  "version": "1.0.0",
+  "description": "Files to keep all WSS training materials",
+  "main": "index.js",
+  "dependencies": {},
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shantatei/Exercises.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/shantatei/Exercises/issues"
+  },
+  "homepage": "https://github.com/shantatei/Exercises#readme"
+}

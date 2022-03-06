@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo List</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/mystyle.css">
+
+</head>
+
+<body>
+
+    <div class="container d-flex justify-content-center">
+        <div id="parent">
+            <div class="header bg-white border-0">
+                <h1>Todo List</h1>
+            </div>
+            <form class="form">
+                <!-- Task -->
+                <div class="form-group ">
+                    <label for="todo">Task :</label>
+                    <input type="text" class="form-control" id="todoinput" required>
+                </div>
+
+                <!-- Deadline -->
+                <div class="form-group ">
+                    <label for="duedate">Deadline :</label>
+                    <input type="date" class="form-control" id="duedate" required>
+                </div>
+
+                <!-- Type -->
+                <div class="form-group">
+                    <label for="type">Type:</label>
+                    <select class="form-control" id="type">
+                      <option>School Work</option>
+                      <option>Groceries</option>
+                      <option>Job Related</option>
+                      <option>Others</option>
+                    </select>
+                  </div>
+
+                <!-- Submit Btn -->
+                <button type="submit" id="todo-button" class="btn btn-dark">
+                    <i class="fas fa-plus-square"></i>
+                </button>
+
+
+            </form>
+
+        </div>
+    </div>
+
+
+    <div class="todo-container d-flex justify-content-center">
+        <ul class="todo-list d-flex align-items-center p-0 flex-column"></ul>
+    </div>
+
+
+
+</body>
+<script src="js/jquery-3.6.0.min.js"></script>
+<script src="js/bootstrap.bundle.js"></script>
+<script src="js/app.js"></script>
+<script src="https://kit.fontawesome.com/7ec0d1617e.js" crossorigin="anonymous"></script>
+<script src="https://kit.fontawesome.com/86ec7c1143.js"></script>
+
+</html>
