@@ -245,7 +245,23 @@ function resetlist(){
 }
 
 
-function sortbyorder() {
+function sorttype(a, b) {
+    // Use toUpperCase() to ignore character casing
+    const typeA = a.type.toUpperCase();
+    const typeB = b.type.toUpperCase();
+  
+    let comparison = 0;
+    if (typeA > typeB) {
+      comparison = 1;
+    } else if (typeA < typeB) {
+      comparison = -1;
+    }
+    return comparison;
+  }
+
+
+function sortbyorder(event) {
+    // event.preventDefault();
     if ($('#order :selected').text() === "A-Z") {
         console.log("A-Z");
         var todolist = JSON.parse(localStorage.getItem('todos'));
@@ -253,12 +269,23 @@ function sortbyorder() {
         resetlist();
         localStorage.setItem("todos",JSON.stringify(todolist))
         getTodos();
-        
     } else if ($('#order :selected').text() === "Type") {
         console.log("Type")
-        
+        var todolist = JSON.parse(localStorage.getItem('todos'))
+        todolist.sort(sorttype);
+        resetlist();
+        localStorage.setItem("todos",JSON.stringify(todolist))
+        getTodos();
     }else{
         console.log("Deadline");
+        var todolist = JSON.parse(localStorage.getItem('todos'));
+        todolist.sort(function (a, b) {
+            var dateA = new Date(a.deadline), dateB = new Date(b.deadline)
+            return dateA - dateB
+        });
+        resetlist();
+        localStorage.setItem("todos",JSON.stringify(todolist))
+        getTodos();
     }
 }
 
