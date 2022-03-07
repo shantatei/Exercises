@@ -18,7 +18,7 @@
             <div class="header bg-white border-0">
                 <h1>Todo List</h1>
             </div>
-            <form class="form" >
+            <form class="form">
                 <!-- Task -->
                 <div class="form-group ">
                     <label for="todo">Task :</label>
@@ -35,12 +35,12 @@
                 <div class="form-group">
                     <label for="type">Type:</label>
                     <select class="form-control" id="type">
-                      <option>School Work</option>
-                      <option>Groceries</option>
-                      <option>Job Related</option>
-                      <option>Others</option>
+                        <option>School Work</option>
+                        <option>Groceries</option>
+                        <option>Job Related</option>
+                        <option>Others</option>
                     </select>
-                  </div>
+                </div>
 
                 <!-- Submit Btn -->
                 <button type="submit" id="todo-button" class="btn btn-dark">
@@ -51,7 +51,45 @@
             </form>
 
         </div>
+
     </div>
+
+
+    <div class="filter-container ml-auto">
+        <form class="form" id="order-form">
+            <!-- order -->
+            <div class="form-group">
+                <label for="order">Sortby:</label>
+                <select class="form-control" id="order">
+                    <option>A-Z</option>
+                    <option>Type</option>
+                    <option>Deadline</option>
+                </select>
+            </div>
+
+            <!-- Submit Btn -->
+            <button type="submit"id="order-button" class="btn btn-dark">
+                Sort !
+            </button>
+
+        </form>
+
+        <form class="form" id="search-form">
+
+            <!-- Filter by -->
+            <div class="form-group">
+                <label for="search">Filterby:</label>
+                <input class="form-control" type="search" placeholder="Search" id="search" aria-label="Search">
+            </div>
+            <!-- Clear Btn -->
+            <button type="submit"id="order-button" onclick ="resetlist()"class="btn btn-danger">
+                Clear!
+            </button>
+
+        </form>
+    </div>
+
+
 
 
     <div class="todo-container d-flex justify-content-center">

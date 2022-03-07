@@ -2,18 +2,17 @@ const todoInput = document.getElementById('todoinput')
 const todoButton = document.getElementById('todo-button')
 const todoDate = document.getElementById('duedate')
 const todoList = document.querySelector(".todo-list")
+const orderformbtn = document.getElementById('order-button')
 
 
 let data = []
-
 
 
 //Event Listeners
 document.addEventListener('DOMContentLoaded', getTodos);
 todoButton.addEventListener('click', addTodo);
 todoList.addEventListener('click', deleteCheck);
-
-
+orderformbtn.addEventListener('click', sortbyorder);
 
 
 //Functions
@@ -21,6 +20,7 @@ todoList.addEventListener('click', deleteCheck);
 function addTodo(event) {
 
     data = {
+        _id: Math.random().toString(36).substring(7),
         todo: todoInput.value,
         deadline: todoDate.value,
         type: $('#type :selected').text()
@@ -32,7 +32,7 @@ function addTodo(event) {
     //Todo Div
 
     const todoDiv = document.createElement('div')
-    todoDiv.setAttribute("item", todoInput.value)
+    todoDiv.setAttribute("item", data._id)
     todoDiv.classList.add("card")
 
     //Todo Body
@@ -72,7 +72,7 @@ function addTodo(event) {
     //Delete Button
 
     const deleteButton = document.createElement('button');
-    deleteButton.innerHTML = '<i class="fas fa-trash"></i>';
+    deleteButton.innerHTML = `<i class="fas fa-trash"></i>`;
     deleteButton.classList.add("trash-btn");
     todoBody.appendChild(deleteButton)
 
@@ -107,6 +107,7 @@ function deleteCheck(e) {
     if (item.classList[0] === "complete-btn") {
         const todo1 = item.parentElement;
         const todo = todo1.parentElement
+        console.log(todo);
         todo.classList.toggle("completed");
     }
 
@@ -130,8 +131,8 @@ function saveLocalTodo(todo) {
 }
 
 
-function removeLocalTodo(todo) {
 
+function removeLocalTodo(todoitem) {
 
     //Check 
 
@@ -143,8 +144,8 @@ function removeLocalTodo(todo) {
     }
 
 
-    var tobedeleted = todo.getAttribute("item")
-    todos.splice(todos.indexOf(tobedeleted), 1)
+    var tobedeleted = todoitem.getAttribute("item")
+    todos = todos.filter(todo => todo._id !== tobedeleted)
     localStorage.setItem("todos", JSON.stringify(todos))
 
 }
@@ -152,27 +153,24 @@ function removeLocalTodo(todo) {
 
 function getTodos() {
 
-    console.log("check");
-
-
+    
     //Check 
-
-    let todos;
+    
+    var todos;
     if (localStorage.getItem('todos') === null) {
         todos = [];
     } else {
         todos = JSON.parse(localStorage.getItem('todos'));
     }
-
-    let listoftodos = JSON.parse(localStorage.getItem('todos'))
-    console.log(listoftodos);
-    var todolistlength = listoftodos.length;
+    
+    let listoftodos = todos
+    var todolistlength = todos.length;
     for (var count = 0; count < todolistlength; count++) {
         //Todo Div
 
         const todoDiv = document.createElement('div')
         todoDiv.classList.add("card")
-        todoDiv.setAttribute("item", listoftodos[count].todo)
+        todoDiv.setAttribute("item", listoftodos[count]._id)
 
         //Todo Body
 
@@ -221,6 +219,47 @@ function getTodos() {
     }
 
 
+}
+
+function dynamicSort(property) {
+    var sortOrder = 1;
+
+    if(property[0] === "-") {
+        sortOrder = -1;
+        property = property.substr(1);
+    }
+
+    return function (a,b) {
+        if(sortOrder == -1){
+            return b[property].localeCompare(a[property]);
+        }else{
+            return a[property].localeCompare(b[property]);
+        }        
+    }
+}
+
+function resetlist(){
+    todoList.parentNode.removeChild(todoList)
+    let todos = []
+    localStorage.setItem('todos', JSON.stringify(todos));
+}
+
+
+function sortbyorder() {
+    if ($('#order :selected').text() === "A-Z") {
+        console.log("A-Z");
+        var todolist = JSON.parse(localStorage.getItem('todos'));
+        todolist.sort(dynamicSort("todo"));
+        resetlist();
+        localStorage.setItem("todos",JSON.stringify(todolist))
+        getTodos();
+        
+    } else if ($('#order :selected').text() === "Type") {
+        console.log("Type")
+        
+    }else{
+        console.log("Deadline");
+    }
 }
 
 
