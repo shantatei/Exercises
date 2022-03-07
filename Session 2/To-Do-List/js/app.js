@@ -4,6 +4,8 @@ const todoDate = document.getElementById('duedate')
 const todoList = document.querySelector(".todo-list")
 
 
+let data = []
+
 
 
 //Event Listeners
@@ -18,12 +20,19 @@ todoList.addEventListener('click', deleteCheck);
 
 function addTodo(event) {
 
+    data = {
+        todo: todoInput.value,
+        deadline: todoDate.value,
+        type: $('#type :selected').text()
+    }
+
     event.preventDefault()
 
     if (!(todoInput.value && todoDate.value)) return
     //Todo Div
 
     const todoDiv = document.createElement('div')
+    todoDiv.setAttribute("item", todoInput.value)
     todoDiv.classList.add("card")
 
     //Todo Body
@@ -38,8 +47,6 @@ function addTodo(event) {
     newTodo.classList.add('card-title')
     todoBody.appendChild(newTodo)
 
-    //ADD TODO to Local Storage
-    saveLocalTodo(todoInput.value)
 
     //Create Deadline
 
@@ -69,6 +76,9 @@ function addTodo(event) {
     deleteButton.classList.add("trash-btn");
     todoBody.appendChild(deleteButton)
 
+    //ADD TODO to Local Storage
+    saveLocalTodo(data)
+
     //Append to List
     todoList.appendChild(todoDiv);
 
@@ -86,17 +96,9 @@ function deleteCheck(e) {
     if (item.classList[0] === 'trash-btn') {
         const todo1 = item.parentElement;
         const todo = todo1.parentElement
+        removeLocalTodo(todo)
 
         todo.remove();
-
-        // //Animation
-        // todo.classList.add("fall");
-
-        // todo.addEventListener('transitionend',function(){
-
-        //     todo.remove();
-
-        // });
 
     }
 
@@ -128,6 +130,26 @@ function saveLocalTodo(todo) {
 }
 
 
+function removeLocalTodo(todo) {
+
+
+    //Check 
+
+    let todos;
+    if (localStorage.getItem('todos') === null) {
+        todos = [];
+    } else {
+        todos = JSON.parse(localStorage.getItem('todos'));
+    }
+
+
+    var tobedeleted = todo.getAttribute("item")
+    todos.splice(todos.indexOf(tobedeleted), 1)
+    localStorage.setItem("todos", JSON.stringify(todos))
+
+}
+
+
 function getTodos() {
 
     console.log("check");
@@ -142,13 +164,15 @@ function getTodos() {
         todos = JSON.parse(localStorage.getItem('todos'));
     }
 
-
-    todos.forEach(element => {
-
+    let listoftodos = JSON.parse(localStorage.getItem('todos'))
+    console.log(listoftodos);
+    var todolistlength = listoftodos.length;
+    for (var count = 0; count < todolistlength; count++) {
         //Todo Div
 
         const todoDiv = document.createElement('div')
         todoDiv.classList.add("card")
+        todoDiv.setAttribute("item", listoftodos[count].todo)
 
         //Todo Body
 
@@ -158,21 +182,21 @@ function getTodos() {
 
         //Create Item
         const newTodo = document.createElement('h5');
-        newTodo.innerText = element
+        newTodo.innerText = listoftodos[count].todo
         newTodo.classList.add('card-title')
         todoBody.appendChild(newTodo)
 
         //Create Deadline
 
         const newTodoDeadline = document.createElement('h6');
-        newTodoDeadline.innerText = element
+        newTodoDeadline.innerText = listoftodos[count].deadline
         newTodoDeadline.classList.add('card-subtitle')
         todoBody.appendChild(newTodoDeadline)
 
         //Create Type
 
         const newTodoType = document.createElement('p');
-        newTodoType.innerText = element
+        newTodoType.innerText = listoftodos[count].type
         newTodoType.classList.add('card-text')
         todoBody.appendChild(newTodoType)
 
@@ -190,7 +214,16 @@ function getTodos() {
         deleteButton.classList.add("trash-btn");
         todoBody.appendChild(deleteButton)
 
-    })
+
+        //Append to List
+        todoList.appendChild(todoDiv);
+
+    }
 
 
 }
+
+
+
+
+
