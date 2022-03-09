@@ -5,6 +5,7 @@ const todoList = document.querySelector(".todo-list")
 const orderformbtn = document.getElementById('order-button')
 
 
+
 let data = []
 
 
@@ -127,7 +128,8 @@ function saveLocalTodo(todo) {
 
     todos.push(todo);
     localStorage.setItem('todos', JSON.stringify(todos));
-
+    localStorage.setItem("original",JSON.stringify(todos))
+    
 }
 
 
@@ -147,6 +149,7 @@ function removeLocalTodo(todoitem) {
     var tobedeleted = todoitem.getAttribute("item")
     todos = todos.filter(todo => todo._id !== tobedeleted)
     localStorage.setItem("todos", JSON.stringify(todos))
+    localStorage.setItem("original", JSON.stringify(todos))
 
 }
 
@@ -163,8 +166,70 @@ function getTodos() {
         todos = JSON.parse(localStorage.getItem('todos'));
     }
     
+    localStorage.setItem("original",JSON.stringify(todos))
     let listoftodos = todos
     var todolistlength = todos.length;
+    for (var count = 0; count < todolistlength; count++) {
+        //Todo Div
+
+        const todoDiv = document.createElement('div')
+        todoDiv.classList.add("card")
+        todoDiv.setAttribute("item", listoftodos[count]._id)
+
+        //Todo Body
+
+        const todoBody = document.createElement('div')
+        todoBody.classList.add("card-body")
+        todoDiv.appendChild(todoBody)
+
+        //Create Item
+        const newTodo = document.createElement('h5');
+        newTodo.innerText = listoftodos[count].todo
+        newTodo.classList.add('card-title')
+        todoBody.appendChild(newTodo)
+
+        //Create Deadline
+
+        const newTodoDeadline = document.createElement('h6');
+        newTodoDeadline.innerText = listoftodos[count].deadline
+        newTodoDeadline.classList.add('card-subtitle')
+        todoBody.appendChild(newTodoDeadline)
+
+        //Create Type
+
+        const newTodoType = document.createElement('p');
+        newTodoType.innerText = listoftodos[count].type
+        newTodoType.classList.add('card-text')
+        todoBody.appendChild(newTodoType)
+
+        //Checked Button
+
+        const completedButton = document.createElement('button');
+        completedButton.innerHTML = '<i class="fas fa-check"></i>';
+        completedButton.classList.add("complete-btn");
+        todoBody.appendChild(completedButton)
+
+        //Delete Button
+
+        const deleteButton = document.createElement('button');
+        deleteButton.innerHTML = '<i class="fas fa-trash"></i>';
+        deleteButton.classList.add("trash-btn");
+        todoBody.appendChild(deleteButton)
+
+
+        //Append to List
+        todoList.appendChild(todoDiv);
+
+    }
+
+
+}
+
+function displayOrginal() {
+
+    var array = JSON.parse(localStorage.getItem('original'))
+    let listoftodos = array
+    var todolistlength = array.length;
     for (var count = 0; count < todolistlength; count++) {
         //Todo Div
 
@@ -289,7 +354,55 @@ function sortbyorder(event) {
     }
 }
 
+function SearchTodoList() {
 
+    const searchInput = document.getElementById('search')
+
+
+    searchInput.addEventListener("input", (e) => {
+
+        // declare and assign the value of the event's target to a variable AKA whatever is typed in the search bar
+        let value = e.target.value.toLowerCase()
+
+        console.log(value);
+
+        if (value) {
+
+            
+            let filteredTodoList = []
+            var todolist = JSON.parse(localStorage.getItem('original'))
+
+            for (let index = 0; index < todolist.length; index++) {
+
+                let todotask = todolist[index].todo.toLowerCase()
+
+                if (todotask.indexOf(value) != -1) {
+
+                    filteredTodoList.push(todolist[index])
+
+                }
+
+            }
+
+            resetlist();
+            localStorage.setItem("todos",JSON.stringify(filteredTodoList))
+            getTodos();
+
+
+        } else {
+
+            console.log("show original")
+
+            displayOrginal();
+
+
+        }
+
+    }
+
+    )
+
+}
 
 
 
