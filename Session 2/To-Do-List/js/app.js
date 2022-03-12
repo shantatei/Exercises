@@ -128,8 +128,8 @@ function saveLocalTodo(todo) {
 
     todos.push(todo);
     localStorage.setItem('todos', JSON.stringify(todos));
-    localStorage.setItem("original",JSON.stringify(todos))
-    
+    localStorage.setItem("original", JSON.stringify(todos))
+
 }
 
 
@@ -154,20 +154,20 @@ function removeLocalTodo(todoitem) {
 }
 
 
-function getTodos() {
+function getTodos(search=null) {
 
-    
+
     //Check 
-    
+
     var todos;
     if (localStorage.getItem('todos') === null) {
         todos = [];
     } else {
         todos = JSON.parse(localStorage.getItem('todos'));
     }
-    
-    localStorage.setItem("original",JSON.stringify(todos))
+    if (search == null) localStorage.setItem("original", JSON.stringify(todos))
     let listoftodos = todos
+    console.log(listoftodos)
     var todolistlength = todos.length;
     for (var count = 0; count < todolistlength; count++) {
         //Todo Div
@@ -289,21 +289,21 @@ function displayOrginal() {
 function dynamicSort(property) {
     var sortOrder = 1;
 
-    if(property[0] === "-") {
+    if (property[0] === "-") {
         sortOrder = -1;
         property = property.substr(1);
     }
 
-    return function (a,b) {
-        if(sortOrder == -1){
+    return function (a, b) {
+        if (sortOrder == -1) {
             return b[property].localeCompare(a[property]);
-        }else{
+        } else {
             return a[property].localeCompare(b[property]);
-        }        
+        }
     }
 }
 
-function resetlist(){
+function resetlist() {
     todoList.parentNode.removeChild(todoList)
     let todos = []
     localStorage.setItem('todos', JSON.stringify(todos));
@@ -314,15 +314,15 @@ function sorttype(a, b) {
     // Use toUpperCase() to ignore character casing
     const typeA = a.type.toUpperCase();
     const typeB = b.type.toUpperCase();
-  
+
     let comparison = 0;
     if (typeA > typeB) {
-      comparison = 1;
+        comparison = 1;
     } else if (typeA < typeB) {
-      comparison = -1;
+        comparison = -1;
     }
     return comparison;
-  }
+}
 
 
 function sortbyorder(event) {
@@ -332,16 +332,16 @@ function sortbyorder(event) {
         var todolist = JSON.parse(localStorage.getItem('todos'));
         todolist.sort(dynamicSort("todo"));
         resetlist();
-        localStorage.setItem("todos",JSON.stringify(todolist))
+        localStorage.setItem("todos", JSON.stringify(todolist))
         getTodos();
     } else if ($('#order :selected').text() === "Type") {
         console.log("Type")
         var todolist = JSON.parse(localStorage.getItem('todos'))
         todolist.sort(sorttype);
         resetlist();
-        localStorage.setItem("todos",JSON.stringify(todolist))
+        localStorage.setItem("todos", JSON.stringify(todolist))
         getTodos();
-    }else{
+    } else {
         console.log("Deadline");
         var todolist = JSON.parse(localStorage.getItem('todos'));
         todolist.sort(function (a, b) {
@@ -349,60 +349,52 @@ function sortbyorder(event) {
             return dateA - dateB
         });
         resetlist();
-        localStorage.setItem("todos",JSON.stringify(todolist))
+        localStorage.setItem("todos", JSON.stringify(todolist))
         getTodos();
     }
 }
 
-function SearchTodoList() {
 
-    const searchInput = document.getElementById('search')
+var searchInput = document.getElementById('search')
+searchInput.addEventListener("input", (e) => {
+
+    // declare and assign the value of the event's target to a variable AKA whatever is typed in the search bar
+    let value = e.target.value.toLowerCase().trim()
+
+    console.log(value);
+
+    if (value) {
 
 
-    searchInput.addEventListener("input", (e) => {
+        let filteredTodoList = []
+        var todolist = JSON.parse(localStorage.getItem('original'))
 
-        // declare and assign the value of the event's target to a variable AKA whatever is typed in the search bar
-        let value = e.target.value.toLowerCase()
+        for (let index = 0; index < todolist.length; index++) {
 
-        console.log(value);
+            let todotask = todolist[index].todo.toLowerCase()
 
-        if (value) {
+            if (todotask.indexOf(value) != -1) {
 
-            
-            let filteredTodoList = []
-            var todolist = JSON.parse(localStorage.getItem('original'))
-
-            for (let index = 0; index < todolist.length; index++) {
-
-                let todotask = todolist[index].todo.toLowerCase()
-
-                if (todotask.indexOf(value) != -1) {
-
-                    filteredTodoList.push(todolist[index])
-
-                }
+                filteredTodoList.push(todolist[index])
 
             }
 
-            resetlist();
-            localStorage.setItem("todos",JSON.stringify(filteredTodoList))
-            getTodos();
-
-
-        } else {
-
-            console.log("show original")
-
-            displayOrginal();
-
-
         }
+
+        // resetlist();
+        localStorage.setItem("todos", JSON.stringify(filteredTodoList))
+        getTodos("anything");
+
+
+    } else {
+
+        console.log("show original")
+
+        displayOrginal();
+
 
     }
 
-    )
-
-}
-
+})
 
 
