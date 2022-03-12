@@ -5,13 +5,45 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Todo List</title>
+    <title>Tic Tac Toe</title>
     <link rel="stylesheet" href="../../Resources/bootstrap.min.css">
     <link rel="stylesheet" href="css/mystyle.css">
 
 </head>
 
 <body>
+    <div class="container">
+        <div class="jumbotron">
+            <h1>Welcome to Tic-Tac-Toe</h1>
+            <button class="btn btn-danger" id="restart-btn">Restart Game</button>
+            <button class="btn btn-primary" id="logs-btn">Game Logs</button>
+        </div>
+
+        <h5><b>Steps: </b></h3>
+            <ul>
+                <li>Restart Game by clicking on Restart Button</li>
+                <li>Check Board History by clicking on Game Logs</li>
+            </ul>
+    </div>
+    <section class="display" id="player-display">
+        Player <span class="display-player playerX">X</span>'s turn
+    </section>
+
+    <section class="container-game">
+        <div class="tile"></div>
+        <div class="tile"></div>
+        <div class="tile"></div>
+        <div class="tile"></div>
+        <div class="tile"></div>
+        <div class="tile"></div>
+        <div class="tile"></div>
+        <div class="tile"></div>
+        <div class="tile"></div>
+    </section>
+    <section class="display-announcer hide"></section>
+
+
+
 
 
 </body>

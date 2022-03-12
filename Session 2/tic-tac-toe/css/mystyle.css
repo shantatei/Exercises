@@ -1,0 +1,52 @@
+* {
+    all: none;
+}
+
+td {
+    height: 140px;
+    width: 140px;
+    border: 5px black solid;
+}
+
+.btn {
+    padding: 15px 30 px;
+}
+
+.jumbotron {
+    background-color: white;
+    border: 2px solid #0f0505;
+    margin-top: 10px;
+}
+
+.container-game {
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 33% 33% 33%;
+    grid-template-rows: 33% 33% 33%;
+    max-width: 300px;
+}
+
+.display {
+    text-align: center;
+    font-size: 25px;
+}
+
+.display-announcer {
+    text-align: center;
+    font-size: 25px;
+}
+
+.hide {
+    display: none;
+}
+
+.tile {
+    border: 1px solid black;
+    min-width: 100px;
+    min-height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 50px;
+    cursor: pointer;
+}

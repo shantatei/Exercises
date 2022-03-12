@@ -47,6 +47,7 @@ function getTodosList() {
     return JSON.parse(localStorage.getItem('todos'));
 }
 
+
 function getTodos(source = null) {
     var todos = getTodosList();
     if (source == null) localStorage.setItem('original', JSON.stringify(todos));
@@ -162,6 +163,8 @@ function sortbyorder(event) {
 }
 
 var searchInput = document.getElementById('search');
+
+//Search Function
 searchInput.addEventListener('input', (e) => {
     let value = e.target.value.toLowerCase().trim();
     if (value) {
