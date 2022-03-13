@@ -4,10 +4,13 @@ window.addEventListener('DOMContentLoaded', () => {
     const restartButton = document.querySelector('#restart-btn');
     const announcer = document.querySelector('.display-announcer');
     const playerDisplayhide = document.querySelector('#player-display')
+    const gamelogsButton = document.querySelector('#logs-btn')
 
 
 
 
+
+    let boardstate ;
     let board = ['', '', '', '', '', '', '', '', ''];
     let currentPlayer = 'X';
     let isGameActive = true;
@@ -30,35 +33,66 @@ window.addEventListener('DOMContentLoaded', () => {
         [2, 4, 6]
     ];
 
-
-
+    
+    //Checks for Win/Tie
     function handleResultValidation() {
         let roundWon = false;
         for (let i = 0; i <= 7; i++) {
+            //winCondition refers to a scenario in which all 3 tiles are the same 
             const winCondition = winningConditions[i];
+            //a = first tile 
             const a = board[winCondition[0]];
+            //b = second tile 
             const b = board[winCondition[1]];
+            //c = third  tile 
             const c = board[winCondition[2]];
             if (a === '' || b === '' || c === '') {
                 continue;
             }
+            //If all 3 tiles are of the player (in this case X / Y)
             if (a === b && b === c) {
+                //Set the roundWon to true
                 roundWon = true;
                 break;
             }
         }
 
         if (roundWon) {
+            //Checks which player won depending on the currentPlayer var 
             announce(currentPlayer === 'X' ? PLAYERX_WON : PLAYERO_WON);
             isGameActive = false;
             return;
         }
 
+        // if all tiles have been filled up and roundWon is still false announce a Tie
         if (!board.includes(''))
             announce(TIE);
     }
 
+
+    const saveLocalBoardState = (boardstate) => {
+        let historyboard = getHistoryBoard();
+        historyboard.push(boardstate);
+        localStorage.setItem('board', JSON.stringify(historyboard));
+    }
+    
+    function getHistoryBoard() {
+        if (localStorage.getItem('board') === null) return [];
+        return JSON.parse(localStorage.getItem('board'));
+    }
+
+    const showboardHistory = () =>{
+        let historyboardstate = JSON.parse(localStorage.getItem('board'));
+        console.log(historyboardstate)
+    }
+
+
     const announce = (type) => {
+        boardstate = {
+            board : board ,
+            state : type
+        }
+        saveLocalBoardState(boardstate);
         switch (type) {
             case PLAYERO_WON:
                 announcer.innerHTML = 'Player <span class="playerO">O</span> Won';
@@ -89,6 +123,7 @@ window.addEventListener('DOMContentLoaded', () => {
     };
 
     const updateBoard = (index) => {
+        //updates the board array and set the tile 0-9 to either player X / Y depending on curentPlayer var 
         board[index] = currentPlayer;
     }
 
@@ -99,8 +134,13 @@ window.addEventListener('DOMContentLoaded', () => {
         playerDisplay.classList.add(`player${currentPlayer}`);
     }
 
+
+
+
+    //User Action Function checks if the game is active & if the tile that they are clicking is already used 
     const userAction = (tile, index) => {
         if (isValidAction(tile) && isGameActive) {
+            //If true set inner text to X/O (CurrentPlayer)
             tile.innerText = currentPlayer;
             tile.classList.add(`player${currentPlayer}`);
             updateBoard(index);
@@ -128,10 +168,15 @@ window.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+
+    //When User Click on Each Tile Call User Action Function
     tiles.forEach((tile, index) => {
         tile.addEventListener('click', () => userAction(tile, index));
     });
 
     restartButton.addEventListener('click', resetBoard);
 
-});
+    gamelogsButton.addEventListener('click', showboardHistory );
+
+
+})
