@@ -10,7 +10,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
 
 
-    let boardstate ;
+    let boardstate;
     let board = ['', '', '', '', '', '', '', '', ''];
     let currentPlayer = 'X';
     let isGameActive = true;
@@ -33,7 +33,7 @@ window.addEventListener('DOMContentLoaded', () => {
         [2, 4, 6]
     ];
 
-    
+
     //Checks for Win/Tie
     function handleResultValidation() {
         let roundWon = false;
@@ -75,22 +75,71 @@ window.addEventListener('DOMContentLoaded', () => {
         historyboard.push(boardstate);
         localStorage.setItem('board', JSON.stringify(historyboard));
     }
-    
+
     function getHistoryBoard() {
         if (localStorage.getItem('board') === null) return [];
         return JSON.parse(localStorage.getItem('board'));
     }
 
-    const showboardHistory = () =>{
+
+    const showboardHistory = () => {
         let historyboardstate = JSON.parse(localStorage.getItem('board'));
-        console.log(historyboardstate)
+        const modalbody = document.querySelector('.modal-body');
+
+        for (let index = 0; index < historyboardstate.length; index++) {
+            //Creating Tic Tac Toe Grid
+            var tictactoe = `
+            <section class="display-announcer" item = "${index}"></section>
+            <section class="container-game-history">
+            <div class="tilehistory"><div item = "${index}"></div></div>
+            <div class="tilehistory"><div item = "${index}"></div></div>
+            <div class="tilehistory"><div item = "${index}"></div></div>
+            <div class="tilehistory"><div item = "${index}"></div></div>
+            <div class="tilehistory"><div item = "${index}"></div></div>
+            <div class="tilehistory"><div item = "${index}"></div></div>
+            <div class="tilehistory"><div item = "${index}"></div></div>
+            <div class="tilehistory"><div item = "${index}"></div></div>
+            <div class="tilehistory"><div item = "${index}"></div></div>
+            </section>`;
+            //Adding Grid
+            modalbody.insertAdjacentHTML('beforeend', tictactoe);
+
+            //Getting data for each game (OBJECT)
+            const pergame = historyboardstate[index]
+            
+            //Creating an array for the tile elements 
+            let tilearray = []
+            let tilehistoryarray = Array.from(document.querySelectorAll(`.tilehistory > [item="${index}"]`));
+            for (let index = 0; index < tilehistoryarray.length; index++) {
+                let parent = (tilehistoryarray[index]).parentElement
+                tilearray.push(parent)
+            }
+
+
+
+    
+            // Getting Announcer 
+            console.log(pergame.state)
+            let announcer = document.querySelector(`.display-announcer[item="${index}"]`)
+            announcer.innerHTML = `<span>${pergame.state ==  'PLAYERX_WON' ? "Player X Won" :  "Player O Won"}</span>`;
+
+            //Getting board array 
+            const boarditem = pergame.board
+
+
+            tilearray.forEach((tile, index) => {
+
+                tile.innerText = boarditem[index] //Trying to figure out how to get the data from board array to here !!
+            
+            })
+        }
     }
 
 
     const announce = (type) => {
         boardstate = {
-            board : board ,
-            state : type
+            board: board,
+            state: type
         }
         saveLocalBoardState(boardstate);
         switch (type) {
@@ -176,7 +225,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
     restartButton.addEventListener('click', resetBoard);
 
-    gamelogsButton.addEventListener('click', showboardHistory );
+    gamelogsButton.addEventListener('click', showboardHistory);
 
 
 })

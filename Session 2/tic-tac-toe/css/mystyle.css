@@ -40,7 +40,7 @@ td {
     display: none;
 }
 
-.tile {
+.tile{
     border: 1px solid black;
     min-width: 100px;
     min-height: 100px;
@@ -49,4 +49,23 @@ td {
     align-items: center;
     font-size: 50px;
     cursor: pointer;
+}
+
+.tilehistory{
+    border: 1px solid black;
+    min-width: 100px;
+    min-height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 50px;
+    cursor: pointer;
+}
+
+.container-game-history{
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 33% 33% 33%;
+    grid-template-rows: 33% 33% 33%;
+    max-width: 300px;
 }
