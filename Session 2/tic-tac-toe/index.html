@@ -2,71 +2,57 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Tic Tac Toe</title>
-    <link rel="stylesheet" href="../../Resources/bootstrap.min.css">
-    <link rel="stylesheet" href="css/mystyle.css">
-
+    <link rel="stylesheet" href="../../Resources/bootstrap.min.css" />
+    <link rel="stylesheet" href="css/mystyle.css" />
+    <script src="../../Resources/jquery-3.6.0.min.js" defer></script>
+    <script src="../../Resources/bootstrap.bundle.js" defer></script>
+    <script src="js/app.js" defer></script>
+    <script src="https://kit.fontawesome.com/7ec0d1617e.js" crossorigin="anonymous" defer></script>
+    <script src="https://kit.fontawesome.com/86ec7c1143.js" defer></script>
 </head>
 
 <body>
     <div class="container">
         <div class="jumbotron">
             <h1>Welcome to Tic-Tac-Toe</h1>
-            <button class="btn btn-danger" id="restart-btn">Restart Game</button>
-            <button class="btn btn-primary" id="logs-btn" data-toggle="modal" data-target="#HistoryModal">Game Logs</button>
+            <button class="btn btn-danger" id="restart-btn">
+                Restart Game
+            </button>
+            <button class="btn btn-primary" id="logs-btn" data-toggle="modal" data-target="#HistoryModal">
+                Game Logs
+            </button>
         </div>
 
-        <h5><b>Steps: </b></h3>
-            <ul>
-                <li>Restart Game by clicking on Restart Button</li>
-                <li>Check Board History by clicking on Game Logs</li>
-            </ul>
+        <h5><b>Steps: </b></h5>
+        <ul>
+            <li>Restart Game by clicking on Restart Button</li>
+            <li>Check Board History by clicking on Game Logs</li>
+        </ul>
     </div>
-    <section class="display" id="player-display">
-        Player <span class="display-player playerX">X</span>'s turn
-    </section>
+    <section class="display" id="player-display">Player X's turn</section>
 
-    <section class="container-game">
-        <div class="tile"></div>
-        <div class="tile"></div>
-        <div class="tile"></div>
-        <div class="tile"></div>
-        <div class="tile"></div>
-        <div class="tile"></div>
-        <div class="tile"></div>
-        <div class="tile"></div>
-        <div class="tile"></div>
-    </section>
-    <section class="display-announcer hide"></section>
-
-
+    <section class="container-game"></section>
 
     <!--  Board History Modal -->
     <div class="modal fade" id="HistoryModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Board History</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">
+                        Board History
+                    </h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body">
-                </div>
+                <div class="modal-body"></div>
             </div>
         </div>
     </div>
-
-
-
 </body>
-<script src="../../Resources/jquery-3.6.0.min.js"></script>
-<script src="../../Resources/bootstrap.bundle.js"></script>
-<script src="js/app.js"></script>
-<script src="https://kit.fontawesome.com/7ec0d1617e.js" crossorigin="anonymous"></script>
-<script src="https://kit.fontawesome.com/86ec7c1143.js"></script>
 
 </html>
